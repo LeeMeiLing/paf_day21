@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,10 @@ public class CustomerController {
     @GetMapping("/limit")
     public List<Customer> getAllCustomers(@RequestParam int limit, @RequestParam int offset){
         return custSvc.retrieveAllCustomersWithLimitOffset(limit, offset);
+    }
+
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable int id){
+        return custSvc.findCustomerById(id);
     }
 }

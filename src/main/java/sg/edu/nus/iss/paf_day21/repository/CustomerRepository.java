@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class CustomerRepository {
 
     private final String findAllSQLLimitOffset = "select * from customer limit ? offset ?";
 
+    private final String findByIdSQL = "select * from customer where id = ?";
 
     public List<Customer> getAllCustomers(){
         
@@ -58,4 +60,10 @@ public class CustomerRepository {
         return Collections.unmodifiableList(custList);
     }
 
+    public Customer getCustomerById(int id){
+        
+        return jdbcTemplate.queryForObject(findByIdSQL, 
+            BeanPropertyRowMapper.newInstance(Customer.class), id);
+
+    }
 }
