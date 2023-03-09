@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.nus.iss.paf_day21.model.Customer;
@@ -22,4 +23,8 @@ public class CustomerController {
         return custSvc.retrieveAllCustomers();
     }
 
+    @GetMapping("/limit")
+    public List<Customer> getAllCustomers(@RequestParam int limit, @RequestParam int offset){
+        return custSvc.retrieveAllCustomersWithLimitOffset(limit, offset);
+    }
 }

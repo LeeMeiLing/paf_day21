@@ -19,10 +19,31 @@ public class CustomerRepository {
 
     private final String findAllSQL = "select * from customer"; // dont need to include ; in the string
 
+    private final String findAllSQLLimitOffset = "select * from customer limit ? offset ?";
+
+
     public List<Customer> getAllCustomers(){
         
         final List<Customer> custList = new ArrayList<>();
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(findAllSQL);
+
+        while(rs.next()){
+            Customer cust = new Customer();
+            cust.setId(rs.getInt("id"));
+            // cust.setId(rs.getInt(0)); // if doesnt work try 1
+            cust.setFirstName(rs.getString("first_name"));
+            cust.setLastName(rs.getString("last_name"));
+            cust.setDob(rs.getDate("dob"));
+            custList.add(cust);
+        }
+
+        return Collections.unmodifiableList(custList);
+    }
+
+    public List<Customer> getAllCustomersWithLimitOffset(int limit, int offset){
+        
+        final List<Customer> custList = new ArrayList<>();
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(findAllSQLLimitOffset,limit,offset);
 
         while(rs.next()){
             Customer cust = new Customer();
