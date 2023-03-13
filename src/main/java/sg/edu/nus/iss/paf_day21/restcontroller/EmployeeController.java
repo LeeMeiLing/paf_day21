@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +26,10 @@ public class EmployeeController {
     @Autowired
     EmployeeService empSvc;
 
+
+    // @RequestBody Employee employee -> only for form data sent in JSON format, does not work for urlencoded form (MediaType unsupported)
+    // @ModelAttribute Employee employee -> works only for urlencoded form, does not work for JSON format 
+    // No annotation -> only for form data sent in JSON format, does not work for urlencoded form  
     @PostMapping
     public ResponseEntity<Boolean> save(Employee employee){
         Boolean saved = empSvc.save(employee);
@@ -32,7 +37,7 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public ResponseEntity<Integer> update(Employee employee){ // try w/o @RequestBody
+    public ResponseEntity<Integer> update(Employee employee){
         Integer updated = empSvc.update(employee);  
         return ResponseEntity.status(HttpStatus.CREATED).body(updated);
     }

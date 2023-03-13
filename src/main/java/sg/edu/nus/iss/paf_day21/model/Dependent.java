@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Dependent {
     
     private Integer id;
-    // private Integer employeeId;
+    private Integer employeeId;
     private String fullName;
     private String relationship;
     private Date birthDate;
