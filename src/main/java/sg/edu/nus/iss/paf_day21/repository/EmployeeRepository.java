@@ -172,7 +172,7 @@ public class EmployeeRepository {
                 ps.setString(2, employee.getLastName());
                 ps.setInt(3, employee.getSalary());
 
-                ps.execute(); // !!!!!!!
+                ps.execute(); // !!!!!!! cannot use return ps.execute() because it returns null for update
                 return true;
             }
             
